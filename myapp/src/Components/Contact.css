@@ -1,0 +1,29 @@
+
+.contact-form input {
+  width: 60%;
+  height: 30px;
+  padding: 5px;
+  margin: 5px 0;
+  border-radius: 25px;
+  font-size: '22px';
+  border: none;
+}
+
+.contact-form input:focus {
+  outline: none;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.9);
+}
+
+.contact-form button {
+  background-color:'aliceblue';
+  color: #36074A;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.contact-form button:hover {
+  background-color: #ca9edd;
+}

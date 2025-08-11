@@ -1,0 +1,98 @@
+/* Welcome.css */
+
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans&display=swap');
+
+.welcome-container {
+  width: 100%;
+  height: 100vh;
+  position: relative;
+  background: linear-gradient(91deg, #2A0C3E 0%, #361050 18%, #48156A 40%, #6F20A4 100%);
+  overflow: hidden;
+  border-radius: 50px;
+}
+
+.logo {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  width: 100px; /* Adjust size as needed */
+  height: auto;
+  z-index: 10;
+}
+
+
+/* Group to position both buttons side-by-side */
+.button-group {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  display: flex;
+  gap: 10px; /* space between buttons */
+}
+
+/* Style for both buttons */
+.action-button {
+  padding: 10px 20px;
+  background-color: white;
+  color: #2A0C3E;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-family: 'Josefin Sans', sans-serif;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.action-button:hover {
+  background-color: #f0e6ff;
+}
+
+.welcome-footer {
+  position: absolute;
+  bottom: 0px;
+  width: 100%;
+  text-align: center;
+  color: white;
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 14px;
+  background-color: #2A0C3E;
+}
+
+.center-container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+}
+
+.purple-rectangle {
+  width: 80%;
+  height: 400px;
+  left: 10%;
+  background: rgba(42, 12, 62, 0.72);
+  border-radius: 80px;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.dragon-image {
+  max-width: 40%;
+  width: 400px;
+  height: auto;
+  border-radius: 20px;
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+}
+
+.Welcome-text {
+  position: absolute;
+  top: 10%;
+  left: 80px;
+  transform: translateY(-50%);
+  color: white;
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 42px;
+  text-align: left;
+}

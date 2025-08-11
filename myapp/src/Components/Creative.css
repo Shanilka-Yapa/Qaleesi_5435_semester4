@@ -1,0 +1,107 @@
+.idea-form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+  background-color: #36074A;
+  font-family: Arial, sans-serif;
+  color: white;
+  min-height: 80vh;
+  border-radius: 50px;
+
+}
+
+.form-title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 2rem;
+  letter-spacing: 5px;
+  font-family: 'josefin sans', sans-serif;
+}
+
+.idea-input-box {
+  width: 80%;
+  max-width: 600px;
+  background-color: #5d259e; /* A lighter purple for the text box */
+  border-radius: 25px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.idea-textarea {
+  width: 100%;
+  height: 200px;
+  background-color: #5d259e; /* Same as the box to blend in */
+  border: none;
+  color: white;
+  font-size: 1.2rem;
+  resize: none; /* Prevents user from resizing */
+  outline: none;
+}
+
+.idea-textarea::placeholder {
+  color: #c7b8e1; /* A light, muted purple for the placeholder text */
+  font-style: italic;
+}
+
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  width: 80%;
+  max-width: 600px;
+}
+
+.upload-button,
+.submit-button {
+  padding: 0.75rem 2rem;
+  font-size: 1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  color: white;
+  transition: background-color 0.3s ease;
+}
+
+.upload-button {
+  background-color: #5d259e;
+}
+
+.upload-button:hover{
+  background-color: #7a3ccb;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px; 
+  padding: 20px;
+
+}
+
+.empty-box {
+  width: 300px;
+  height: 200px;
+  background-color: #ffffff; 
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+}
+
+.edit-button{
+    padding: 10px 20px;
+    border-radius: 25px;
+    border: none;
+    background-color: #5d259e; /* A purple background for the button */
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.button-row {
+  display: flex;
+  justify-content: space-between; /* Pushes buttons to the edges */
+  width: 100%;
+}

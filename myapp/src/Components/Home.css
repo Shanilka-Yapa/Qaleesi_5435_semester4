@@ -1,0 +1,176 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden; /* ⛔ disables sideways scrolling */
+  box-sizing: border-box;
+}
+
+.home-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 40px;
+  background-color: #fff;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.logo {
+  height: 100px;
+  width: auto;
+}
+
+.profile-image {
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-left: auto
+}
+
+.main-content {
+  flex: 1;
+  padding: 20px 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.hero-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 50px;
+  background-color: #36074A;
+  border-radius: 20px;
+  padding: 40px;
+  color: white;
+}
+
+.hero-text h1 {
+  font-size: 3rem;
+  margin-bottom: 20px;
+}
+
+.dragon-image {
+  width: 300px;
+  height: auto;
+}
+
+.key-pillars {
+  margin-bottom: 50px;
+}
+
+.key-pillars h2 {
+  text-align: center;
+  color: #36074A;
+  margin-bottom: 30px;
+}
+
+.pillar-icons {
+  display: flex;
+  justify-content: space-around;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.pillar-icon {
+  width: 100px;
+  height: 100px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #36074A;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+  padding: 10px;
+}
+
+.pillar-icon.active {
+  transform: scale(1.1);
+  color: white;
+}
+
+.slider-section {
+  margin-bottom: 50px;
+}
+
+.content-box {
+  position: relative;
+  padding: 60px;
+  border-radius: 20px;
+  color: white;
+  min-height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease;
+}
+
+.content-text {
+  text-align: center;
+  max-width: 600px;
+  font-size: 1.2rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 10px;
+  transition: transform 0.3s ease;
+}
+
+.arrow:hover {
+  transform: translateY(-50%) scale(1.2);
+}
+
+.arrow.left {
+  left: 20px;
+}
+
+.arrow.right {
+  right: 20px;
+}
+
+@media (max-width: 768px) {
+  .hero-section {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .dragon-image {
+    width: 200px;
+    margin-top: 20px;
+  }
+
+  .pillar-icons {
+    gap: 10px;
+  }
+
+  .pillar-icon {
+    width: 80px;
+    height: 80px;
+    font-size: 14px;
+  }
+}
