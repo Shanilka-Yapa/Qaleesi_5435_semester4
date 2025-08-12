@@ -1,10 +1,76 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, {useState} from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import Logo from '../assets/Images/Logo.png';
 import homeIcon from '../assets/Images/Home.png';
 
 const Profile = () => {
+  const navigate = useNavigate();
   const storedUser = JSON.parse(localStorage.getItem("user")) || {};
+  const [username, setUsername] = useState(storedUser.username || '');
+  const [isEditing, setIsEditing] = useState(false);
+
+  if (!storedUser){
+    navigate("/login"); //redirect if not logged in
+  }
+
+  const handleDelete = async () => {
+    if (!storedUser._id) {
+      alert("User ID not found");
+      return;
+    }
+
+    if (!window.confirm("Are you sure you want to delete your account? This action cannot be undone.")) return;
+
+    try {
+      const res= await fetch(`http://localhost:5000/api/users/${storedUser._id}`, {
+        method: 'DELETE',
+      })
+
+      if (res.ok) {
+        alert("Account deleted successfully");
+        localStorage.removeItem("user");
+        navigate("/login");
+      } else {
+        alert("Error deleting account");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      alert("Error deleting account");
+    }
+  };
+
+  const handleEdit = async () => {
+    if (!storedUser._id) {
+      alert("User ID not found");
+      return;
+    }
+
+    try {
+      const res = await fetch(`http://localhost:5000/api/users/${storedUser._id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username })
+      });
+
+      if (res.ok) {
+        const updatedUser = await res.json();
+        localStorage.setItem("user", JSON.stringify(updatedUser));
+        setIsEditing(false);
+        alert("Username updated successfully!");
+      } else {
+        const data = await res.json();
+        alert(data.message || "Error updating username");
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Server error");
+    }
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("user"); // Remove saved user
+    window.location.href = "/login"; // Redirect to login page
+  };
 
   return (
     <div style={{
@@ -62,10 +128,11 @@ const Profile = () => {
             <label style={{ width: '100px', color: '#E6E0EB', paddingRight: '100px' }}>Username</label>
             <input
               type="text"
-              value={storedUser.username || ''}
-              readOnly
+              value={username}
+              readOnly={!isEditing}
+              onChange={(e) => setUsername(e.target.value)}
               style={{
-                backgroundColor: 'white',
+                backgroundColor: isEditing ? 'white' : '#ddd',
                 border: 'none',
                 borderRadius: '20px',
                 padding: '12px 20px',
@@ -103,6 +170,7 @@ const Profile = () => {
           marginTop: '20px' 
         }}>
           <button
+            onClick={handleDelete}
             style={{
               backgroundColor: '#E6E0EB',
               color: '#36074A',
@@ -113,9 +181,41 @@ const Profile = () => {
               width: '80px'
             }}
           >
-            Edit
+            Delete
           </button>
+        <div style={{ display: 'flex', gap: '10px' }}>
+          {!isEditing ? (
+            <button
+              onClick={() => setIsEditing(true)}
+              style={{
+                backgroundColor: '#E6E0EB',
+                color: '#36074A',
+                border: 'none',
+                borderRadius: '20px',
+                padding: '8px 20px',
+                cursor: 'pointer'
+              }}
+            >
+              Edit
+            </button>
+          ) : (
+            <button
+              onClick={handleEdit}
+              style={{
+                backgroundColor: '#E6E0EB',
+                color: '#36074A',
+                border: 'none',
+                borderRadius: '20px',
+                padding: '8px 20px',
+                cursor: 'pointer'
+              }}
+            >
+              Save
+            </button>
+          )}
+        </div>
           <button
+            onClick={handleLogout}
             style={{
               backgroundColor: '#E6E0EB',
               color: '#36074A',

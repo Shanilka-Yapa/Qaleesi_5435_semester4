@@ -22,13 +22,29 @@ export default function Contact() {
     const [email, setEmail] = useState('');
     const [name, setName] = useState('');
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        // You can replace this with actual form submission logic
-        console.log('Submitted:', { email, name });
-        alert(`Thanks for reaching out, ${name}!`);
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+
+      try {
+        const response = await fetch("http://localhost:5000/api/contact", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email, message: name }), // 'name' here is your message
+        });
+
+      if (response.ok) {
+        alert(`Thanks ${name}! You will receive a reply email as soon as possible.`);
         setEmail('');
         setName('');
+      } else {
+        alert("There was an issue sending your message. Please try again.");
+        }
+      } catch (error) {
+        console.error("Error sending contact form:", error);
+        alert("Server error. Please try again later.");
+      }
     };
 
     
