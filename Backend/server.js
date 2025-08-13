@@ -7,6 +7,7 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // Connect to MongoDB
 mongoose.connect(process.env.MONGO_URI, {
@@ -15,6 +16,16 @@ mongoose.connect(process.env.MONGO_URI, {
 })
 .then(() => console.log("✅ MongoDB Connected"))
 .catch(err => console.error("❌ MongoDB Error:", err));
+
+// Import routes
+const userRoutes = require('./routes/userRoutes');
+const contactRoutes = require('./routes/contactRoutes');
+const joinRoutes = require('./routes/joinRoutes');
+
+//use routes
+app.use('/api/users', userRoutes);
+app.use('/api/contact', contactRoutes);
+app.use('/api/join', joinRoutes);
 
 // Example test route
 app.get('/', (req, res) => {
@@ -25,10 +36,4 @@ app.get('/', (req, res) => {
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 
-// Import routes
-const userRoutes = require('./routes/userRoutes');
-const contactRoutes = require('./routes/contactRoutes');
 
-//use routes
-app.use('/api/users', userRoutes);
-app.use('/api/contact', contactRoutes);

@@ -21,17 +21,59 @@ import contactIcon from '../assets/Images/contactus.png';
 import hands from '../assets/Images/volunteer1.png';
 
 
+
 export default function Join() {
 
     const [currentSlide, setCurrentSlide] = useState(0);
 
     const navigate = useNavigate();
+    const [successMessage, setSuccessMessage] = useState('');
 
+    const [formData, setFormData] = useState({
+        firstname: '',
+        lastname: '',
+        email: '',
+        phoneno: '',
+        reason: ''
+    });
+
+    const handleChange = (e) => {
+      setFormData({ ...formData, [e.target.name]: e.target.value });
+    }
+
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+      try {
+        const res = await fetch("http://localhost:5000/api/join", {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(formData)
+        });
+
+        const data = await res.json();
+        setSuccessMessage(data.message || "Thank you for Submitting!");
+        setFormData({
+          firstname: '',
+          lastname: '',
+          email: '',
+          phoneno: '',
+          reason: ''
+        });
+
+        //hide after 3 seconds
+        setTimeout(() => setSuccessMessage(''), 3000);
+      } catch (err) {
+        setSuccessMessage("Error submitting form");
+      }
+    };
 
     const MenuItem = ({ icon, text, path }) => {
         const currentPath = window.location.pathname;
         const isHome = path === '/';
         const isActive = currentPath === path;
+
 
     return (
       <li style={{ marginBottom: '15px' }}>
@@ -165,34 +207,70 @@ export default function Join() {
         }}
         >
           <h2>Fill the following form</h2>
-          <div className="form-container">
+          <form className="form-container" onSubmit={handleSubmit}>
             <div className="form-group">
-              <label htmlFor="first-name" className="form-label">First name</label>
-              <input type="text" id="first-name" name="first-name" className="form-input" />
+              <label htmlFor="firstname" className="form-label">First name</label>
+              <input 
+              type="text" 
+              id="firstname" 
+              name="firstname" 
+              className="form-input" 
+              value={formData.firstname} 
+              onChange={handleChange} />
             </div>
 
             <div className="form-group">
-              <label htmlFor="last-name" className="form-label">Last name</label>
-              <input type="text" id="last-name" name="last-name" className="form-input" />
+              <label htmlFor="lastname" className="form-label">Last name</label>
+              <input 
+              type="text" 
+              id="lastname" 
+              name="lastname" 
+              className="form-input" 
+              value={formData.lastname} 
+              onChange={handleChange} />
             </div>
 
             <div className="form-group">
               <label htmlFor="email" className="form-label">Email</label>
-              <input type="email" id="email" name="email" className="form-input" />
+              <input 
+              type="email" 
+              id="email" 
+              name="email" 
+              className="form-input" 
+              value={formData.email} 
+              onChange={handleChange} />
             </div>
 
             <div className="form-group">
-              <label htmlFor="phone-no" className="form-label">Phone no</label>
-              <input type="tel" id="phone-no" name="phone-no" className="form-input" />
+              <label htmlFor="phoneno" className="form-label">Phone no</label>
+              <input 
+              type="tel" 
+              id="phoneno" 
+              name="phoneno" 
+              className="form-input" 
+              value={formData.phoneno} 
+              onChange={handleChange} />
             </div>
 
             <div className="form-group">
               <label htmlFor="reason" className="form-label">Reason</label>
-              <input type="text" id="reason" name="reason" className="form-input" />
+              <input 
+              type="text" 
+              id="reason" 
+              name="reason" 
+              className="form-input" 
+              value={formData.reason} 
+              onChange={handleChange} />
             </div>
 
             <button className="form-button">Submit</button>
-          </div>
+          </form>
+
+          {/* Success message*/}
+          {successMessage && (
+            <p style={{ color: 'red' ,fontWeight: 'bold' ,marginTop: '20px'}}
+            >{successMessage}</p>
+          )}
 
     </section>
     <section style={{
