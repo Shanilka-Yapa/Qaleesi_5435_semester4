@@ -23,10 +23,7 @@ import impact from '../assets/Images/impact.png';
 
 export default function About() {
   const [currentSlide, setCurrentSlide] = useState(0);
-
   const navigate = useNavigate();
-
-
   const MenuItem = ({ icon, text, path }) => {
     const currentPath = window.location.pathname;
     const isHome = path === '/';
@@ -47,18 +44,14 @@ export default function About() {
             borderRadius: '5px',
             transition: 'all 0.3s ease',
             opacity: isActive || isHome ? 1 : 0.6,
-            fontWeight: isActive || isHome ? 'bold' : 'normal'
-          }}
-        >
+            fontWeight: isActive || isHome ? 'bold' : 'normal'}}>
           <img 
             src={icon} 
             alt={text} 
             style={{ 
               width: '24px', 
               height: '24px',
-              opacity: isActive || isHome ? 1 : 0.6
-            }} 
-          />
+              opacity: isActive || isHome ? 1 : 0.6}} />
           {text}
         </Link>
       </li>
@@ -71,19 +64,15 @@ export default function About() {
       position: 'relative',
       overflowY: 'auto',
       overflowX: 'hidden',
-      fontFamily:'josefin sans, sans-serif'
-    }}>
+      fontFamily:'josefin sans, sans-serif'}}>
       <header className="header" style={{
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
         padding: '20px 40px',
         backgroundColor: '#fff',
-        position: 'relative'
-      }}>
+        position: 'relative'}}>
         <img src={Logo} alt="Qaleesi Logo" className="logo" />
-
-      
         <img 
            src={arrow} 
             alt="arrow back" 
@@ -93,13 +82,10 @@ export default function About() {
               height: '40px',
               cursor: 'pointer',
               objectFit: 'cover',
-              zIndex: 1000
-            }}
+              zIndex: 1000}}
             onClick={() => navigate('/home')}
             onMouseOver={(e) => e.target.style.transform = 'scale(1.1)'}
-            onMouseOut={(e) => e.target.style.transform = 'scale(1)'}
-          />
-
+            onMouseOut={(e) => e.target.style.transform = 'scale(1)'}/>
       </header>
 
       <main style={{ padding: '20px' }}>
@@ -110,8 +96,7 @@ export default function About() {
             backgroundColor: '#36074A',
             padding: '20px',
             borderRadius: '10px',
-            height: '400px',
-          }}>
+            height: '400px',}}>
           <ul style={{ listStyle: 'none', padding: 0, margin: 0}}>
             <MenuItem icon={homeIcon} text="Home" path="/home"/>
             <MenuItem icon={aboutIcon} text="About us" path="/about" />
@@ -136,8 +121,7 @@ export default function About() {
               height: '400px',
               alignItems: 'center',
               justifyContent: 'center',
-              textAlign: 'center'
-            }}>
+              textAlign: 'center'}}>
 
               <div className="hero-text">
                 <h1 style={{ fontSize: '2.2rem', 
@@ -154,9 +138,7 @@ export default function About() {
                 style={{
                   width: '500px',
                   height: 'auto',
-                  marginRight: '40px',
-                }}
-              />
+                  marginRight: '40px',}}/>
             </section>
           </div>
         </div>
@@ -170,9 +152,7 @@ export default function About() {
             color: '#36074A',
             maxWidth: '2000px',
             margin: '0 auto',
-            fontSize: '1.3rem'
-        }}
-        >
+            fontSize: '1.3rem'}}>
 
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '40px' }}>
         {/* Card component */}
@@ -208,76 +188,64 @@ export default function About() {
                     backgroundColor: '#fff',
                     borderRadius: '15px',
                     padding: '20px',
-                    boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)'
-                }}>
+                    boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)'}}>
                 <h3>{item.title}</h3>
                 <img
                     src={item.image}
                     alt={item.title}
-                    style={{ width: '100px', height: 'auto', borderRadius: '10px', marginBottom: '10px' }}
-                />
+                    style={{ width: '100px', height: 'auto', borderRadius: '10px', marginBottom: '10px' }}/>
                 <p>{item.description}</p>
             </div>
         ))}
 
-  </div>
+        </div>
 
     {/* Our Impact */}
-<div
-  style={{
-    marginTop: '60px',
-    textAlign: 'center',
-    backgroundColor: '#340f4dff',
-    height: 'auto',
-    padding: '40px 20px',
-    borderRadius: '50px',
-  }}
->
-  <h3 style={{ fontSize: '2rem', marginBottom: '30px', color: 'white' }}>Our Impact</h3>
+        <div
+          style={{
+            marginTop: '60px',
+            textAlign: 'center',
+            backgroundColor: '#340f4dff',
+            height: 'auto',
+            padding: '40px 20px',
+            borderRadius: '50px',}}>
+          <h3 style={{ fontSize: '2rem', marginBottom: '30px', color: 'white' }}>Our Impact</h3>
 
-  <div
-    style={{
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      gap: '40px',
-      flexWrap: 'wrap',
-    }}
-  >
-    {/* Impact Image */}
-    <img
-      src={impact}
-      alt="Our Impact"
-      style={{
-        width: '250px',
-        height: 'auto',
-        borderRadius: '10px',
-      }}
-    />
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              gap: '40px',
+              flexWrap: 'wrap'}}>
+          {/* Impact Image */}
+            <img
+              src={impact}
+              alt="Our Impact"
+              style={{
+                width: '250px',
+                height: 'auto',
+                borderRadius: '10px'}}/>
 
-    {/* Achievements List */}
-    <ul
-      style={{
-        listStyle: 'none',
-        padding: 0,
-        fontSize: '1.9rem',
-        textAlign: 'left',
-        lineHeight: '2',
-        maxWidth: '600px',
-        listStyleType:'disc',
-        color: 'white'
-      }}
-    >
-      <li>100+ active volunteers</li>
-      <li>5000+ contribute to empower girls</li>
-      <li>50+ events and workshops</li>
-      <li>1000+ voices raised</li>
-    </ul>
-  </div>
-</div>
-
-    </section>
-
+          {/* Achievements List */}
+            <ul
+              style={{
+                listStyle: 'none',
+                padding: 0,
+                fontSize: '1.9rem',
+                textAlign: 'left',
+                lineHeight: '2',
+                maxWidth: '600px',
+                listStyleType:'disc',
+                color: 'white'}}>
+              <li>100+ active volunteers</li>
+              <li>5000+ contribute to empower girls</li>
+              <li>50+ events and workshops</li>
+              <li>1000+ voices raised</li>
+            </ul>
+          </div>
+        </div>
+      </section>
       </main>
       <Footer />
     </div>

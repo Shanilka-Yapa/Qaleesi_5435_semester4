@@ -16,15 +16,11 @@ import creativeIcon from '../assets/Images/creativespace.png';
 import joinIcon from '../assets/Images/joinus.png';
 import contactIcon from '../assets/Images/contactus.png';
 
-
-
 export default function Contact() {
     const [email, setEmail] = useState('');
     const [name, setName] = useState('');
-
     const handleSubmit = async (e) => {
       e.preventDefault();
-
       try {
         const response = await fetch("http://localhost:5000/api/contact", {
           method: "POST",
@@ -32,7 +28,7 @@ export default function Contact() {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({ email, message: name }), // 'name' here is your message
-        });
+});
 
       if (response.ok) {
         alert(`Thanks ${name}! You will receive a reply email as soon as possible.`);
@@ -47,12 +43,8 @@ export default function Contact() {
       }
     };
 
-    
     const [currentSlide, setCurrentSlide] = useState(0);
-
     const navigate = useNavigate();
-
-
     const MenuItem = ({ icon, text, path }) => {
         const currentPath = window.location.pathname;
         const isHome = path === '/';
@@ -73,18 +65,14 @@ export default function Contact() {
             borderRadius: '5px',
             transition: 'all 0.3s ease',
             opacity: isActive || isHome ? 1 : 0.6,
-            fontWeight: isActive || isHome ? 'bold' : 'normal'
-          }}
-        >
+            fontWeight: isActive || isHome ? 'bold' : 'normal'}}>
           <img 
             src={icon} 
             alt={text} 
             style={{ 
               width: '24px', 
               height: '24px',
-              opacity: isActive || isHome ? 1 : 0.6
-            }} 
-          />
+              opacity: isActive || isHome ? 1 : 0.6}} />
           {text}
         </Link>
       </li>
@@ -97,19 +85,15 @@ export default function Contact() {
       position: 'relative',
       overflowY: 'auto',
       overflowX: 'hidden',
-      fontFamily:'josefin sans, sans-serif'
-    }}>
+      fontFamily:'josefin sans, sans-serif'}}>
       <header className="header" style={{
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
         padding: '20px 40px',
         backgroundColor: '#fff',
-        position: 'relative'
-      }}>
+        position: 'relative'}}>
         <img src={Logo} alt="Qaleesi Logo" className="logo" />
-
-      
         <img 
            src={arrow} 
             alt="arrow back" 
@@ -119,13 +103,10 @@ export default function Contact() {
               height: '40px',
               cursor: 'pointer',
               objectFit: 'cover',
-              zIndex: 1000
-            }}
+              zIndex: 1000}}
             onClick={() => navigate('/home')}
             onMouseOver={(e) => e.target.style.transform = 'scale(1.1)'}
-            onMouseOut={(e) => e.target.style.transform = 'scale(1)'}
-          />
-
+            onMouseOut={(e) => e.target.style.transform = 'scale(1)'}/>
       </header>
 
       <main style={{ padding: '20px' }}>
@@ -136,8 +117,7 @@ export default function Contact() {
             backgroundColor: '#36074A',
             padding: '20px',
             borderRadius: '10px',
-            height: '400px',
-          }}>
+            height: '400px',}}>
           <ul style={{ listStyle: 'none', padding: 0, margin: 0}}>
             <MenuItem icon={homeIcon} text="Home" path="/home"/>
             <MenuItem icon={aboutIcon} text="About us" path="/about" />
@@ -162,26 +142,19 @@ export default function Contact() {
                 textAlign: 'center',
                 backgroundImage: `url(${bground})`,
                 backgroundSize: 'cover',
-                backgroundPosition: 'center',
-
-            }}>
+                backgroundPosition: 'center',}}>
                 
-
                 <div className="hero-text">
                     <h1 style={{ fontSize: '4.9rem', 
                         marginBottom: '20px',
                         letterSpacing: '5px',
                         paddingTop:'0',
-                        color:'aliceblue'}}>
-                    Contact us
-                    </h1>
+                        color:'aliceblue'}}>Contact us</h1>
                 </div>
 
                 <div className="contact-form">
                     <h2 style={{
-                        fontSize:'2.5rem'
-                    }}
-                    >Any questions or remarks? Just write us a message!</h2>
+                        fontSize:'2.5rem'}}>Any questions or remarks? Just write us a message!</h2>
                     <form onSubmit={handleSubmit}>
                         <input
                             style={{
@@ -191,9 +164,7 @@ export default function Contact() {
                             placeholder="Enter a valid email address"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
-                            required
-                        />
-
+                            required/>
                         <input
                             style={{
                                 fontFamily: 'Josefin Sans, sans-serif',
@@ -202,8 +173,7 @@ export default function Contact() {
                             placeholder="Enter your Messsage"
                             value={name}
                             onChange={(e) => setName(e.target.value)}
-                            required
-                        /><br />
+                            required/><br />
 
                         <button type="submit" style={{
                             fontFamily: 'Josefin Sans, sans-serif'
@@ -211,7 +181,6 @@ export default function Contact() {
                         >SUBMIT</button>
                     </form>
                 </div>
-
             </section>
           </div>
         </div>
@@ -225,14 +194,10 @@ export default function Contact() {
             color: '#36074A',
             maxWidth: '2000px',
             margin: '0 auto',
-            fontSize: '1.3rem'
-        }}
-        >
-
-
+            fontSize: '1.3rem'}}>
     {/* Call and location */}
-        <div
-            style={{
+          <div
+              style={{
                 marginTop: '60px',
                 textAlign: 'center',
                 backgroundColor: '#340f4dff',
@@ -244,17 +209,13 @@ export default function Contact() {
                 alignItems: 'flex-start',
                 fontFamily: 'Josefin Sans, sans-serif',
                 color: 'white',
-                fontSize: '1.2rem'
-            }}
-        >
-
+                fontSize: '1.2rem'}}>
             {/*Phone section*/}
             <div style={{
                 display:'flex',
                 alignItems:'flex-start',
                 gap:'12px',
-                maxWidth:'45%'
-            }}>
+                maxWidth:'45%'}}>
                 <img 
                     src={callIcon}
                     alt="Phone Icon"
@@ -262,14 +223,10 @@ export default function Contact() {
                         width: '60px',
                         height: '60px',
                         border:'none',
-                        outline:'none'
-                    }} />
+                        outline:'none'}} />
                 <div style={{ lineHeight: '1.5'}}>
                     <h4 style={{ margin: '0 0 8px 0'}}> PHONE (LANDLINE)</h4>
-                    <p style={{ margin: '0'}}>
-                        +912 3567 8987<br />
-                        +912 5252 3336
-                    </p>
+                    <p style={{ margin: '0'}}>+912 3567 8987<br />+912 5252 3336</p>
                 </div>
             </div>
 
@@ -278,8 +235,7 @@ export default function Contact() {
                 display:'flex',
                 alignItems:'flex-start',
                 gap:'12px',
-                maxWidth:'45%'
-            }}>
+                maxWidth:'45%'}}>
                 <img
                     src={locationIcon}
                     alt="Location Icon"
@@ -287,22 +243,16 @@ export default function Contact() {
                         width: '60px',
                         height: '60px',
                         border:'none',
-                        outline:'none'
-                    }} />
+                        outline:'none'}} />
                 <div style={{ lineHeight: '1.5'}}>
                     <h4 style={{ margin: '0 0 8px 0'}}> LOCATION</h4>
-                    <p style={{ margin: '0'}}>
-                        123 Main Street<br />
-                        City, State, 12345
-                    </p>
+                    <p style={{ margin: '0'}}>123 Main Street<br />City, State, 12345</p>
                 </div>
             </div>
         </div>
-
     </section>
-
-      </main>
-      <Footer />
+    </main>
+    <Footer />
     </div>
   );
 }

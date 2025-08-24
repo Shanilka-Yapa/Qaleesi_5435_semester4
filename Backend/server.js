@@ -21,11 +21,13 @@ mongoose.connect(process.env.MONGO_URI, {
 const userRoutes = require('./routes/userRoutes');
 const contactRoutes = require('./routes/contactRoutes');
 const joinRoutes = require('./routes/joinRoutes');
+const creativeRoutes = require('./routes/creativeRoutes');
 
 //use routes
 app.use('/api/users', userRoutes);
 app.use('/api/contact', contactRoutes);
 app.use('/api/join', joinRoutes);
+app.use('/api/creative', creativeRoutes);
 
 // Example test route
 app.get('/', (req, res) => {
@@ -36,6 +38,3 @@ app.get('/', (req, res) => {
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 
-
-const creativeRoutes = require('./routes/creativeRoutes');
-app.use('/api/creative', creativeRoutes);

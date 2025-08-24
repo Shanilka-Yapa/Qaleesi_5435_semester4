@@ -23,9 +23,7 @@ import img5 from '../assets/Images/Halima.png';
 
 export default function Articles() {
 
-
   const [currentSlide, setCurrentSlide] = useState(0);
-
   const navigate = useNavigate();
 
   const MenuItem = ({ icon, text, path }) => {
@@ -48,18 +46,14 @@ export default function Articles() {
             borderRadius: '5px',
             transition: 'all 0.3s ease',
             opacity: isActive || isHome ? 1 : 0.6,
-            fontWeight: isActive || isHome ? 'bold' : 'normal'
-          }}
-        >
+            fontWeight: isActive || isHome ? 'bold' : 'normal'}}>
           <img 
             src={icon} 
             alt={text} 
             style={{ 
               width: '24px', 
               height: '24px',
-              opacity: isActive || isHome ? 1 : 0.6
-            }} 
-          />
+              opacity: isActive || isHome ? 1 : 0.6}} />
           {text}
         </Link>
       </li>
@@ -72,19 +66,15 @@ export default function Articles() {
       position: 'relative',
       overflowY: 'auto',
       overflowX: 'hidden',
-      fontFamily:'josefin sans, sans-serif'
-    }}>
+      fontFamily:'josefin sans, sans-serif'}}>
       <header className="header" style={{
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
         padding: '20px 40px',
         backgroundColor: '#fff',
-        position: 'relative'
-      }}>
+        position: 'relative'}}>
         <img src={Logo} alt="Qaleesi Logo" className="logo" />
-
-      
         <img 
            src={arrow} 
             alt="arrow back" 
@@ -94,13 +84,10 @@ export default function Articles() {
               height: '40px',
               cursor: 'pointer',
               objectFit: 'cover',
-              zIndex: 1000
-            }}
+              zIndex: 1000}}
             onClick={() => navigate('/home')}
             onMouseOver={(e) => e.target.style.transform = 'scale(1.1)'}
-            onMouseOut={(e) => e.target.style.transform = 'scale(1)'}
-          />
-
+            onMouseOut={(e) => e.target.style.transform = 'scale(1)'}/>
       </header>
 
       <main style={{ padding: '20px' }}>
@@ -111,8 +98,7 @@ export default function Articles() {
             backgroundColor: '#36074A',
             padding: '20px',
             borderRadius: '10px',
-            height: '400px',
-          }}>
+            height: '400px',}}>
           <ul style={{ listStyle: 'none', padding: 0, margin: 0}}>
             <MenuItem icon={homeIcon} text="Home" path="/home"/>
             <MenuItem icon={aboutIcon} text="About us" path="/about" />
@@ -134,23 +120,18 @@ export default function Articles() {
               padding: '40px',
               color: 'white',
               height: '400px',
-              alignItems: 'center'
-            }}>
+              alignItems: 'center'}}>
 
               <div className="hero-text">
                 <h1 style={{ 
                     fontSize: '2.8rem', 
                     marginBottom: '20px',
-                    letterSpacing: '10px' }}>
-                  Articles:<br />
-                </h1>
+                    letterSpacing: '10px' }}>Articles:<br /></h1>
                 <p style={{ 
                     fontSize: '1.5rem', 
                     lineHeight: '1.6',
                     letterSpacing: '13px' ,
-                    fontWeight: 'bold'}}>
-                  HANDLE WITH CURIOSITY.
-                </p>
+                    fontWeight: 'bold'}}>HANDLE WITH CURIOSITY.</p>
 
                 <img src={books} alt="Books" style={{ 
                     width: '250px', 
@@ -164,9 +145,7 @@ export default function Articles() {
                 style={{
                   width: '450px',
                   height: 'auto',
-                  marginRight: '40px'
-                }}
-              />
+                  marginRight: '40px'}}/>
             </section>
           </div>
         </div>
@@ -179,8 +158,7 @@ export default function Articles() {
             marginTop: '40px',
             border: '2px dashed #36074A',
             borderRadius: '10px',
-            padding: '20px',
-        }}>
+            padding: '20px',}}>
             <div
                 onClick={() => setCurrentSlide(prev => (prev + 1) % 5)}
                 style={{
@@ -190,9 +168,7 @@ export default function Articles() {
                     overflow: 'hidden',
                     boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
                     position: 'relative',
-                    cursor: 'pointer',
-                }}
-            >
+                    cursor: 'pointer',}}>
             {[img1, img2, img3, img4, img5].map((img, index) => (
             <img
                 key={index}
@@ -207,17 +183,10 @@ export default function Articles() {
                     left: 0,
                     transition: 'opacity 1s ease-in-out',
                     opacity: currentSlide === index ? 1 : 0,
-                    pointerEvents: currentSlide === index ? 'auto' : 'none',
-                }}
-            />
-        ))}
+                    pointerEvents: currentSlide === index ? 'auto' : 'none',}}/>))}
         </div>
         </div>
-
-
-
       </main>
-
       <Footer />
     </div>
   );
