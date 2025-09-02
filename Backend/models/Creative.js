@@ -3,7 +3,8 @@ const mongoose = require("mongoose");
 const creativeSchema = new mongoose.Schema({
   idea: { type: String },
   image: { type: String }, // store image as base64 string or URL
-  createdAt: { type: Date, default: Date.now }
+  createdAt: { type: Date, default: Date.now },
+  username: { type: String, required: true },
 });
 
 module.exports = mongoose.model("Creative", creativeSchema);

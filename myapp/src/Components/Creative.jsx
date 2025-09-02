@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Footer from './Footer.jsx';
 import './Home.css';
@@ -15,7 +15,6 @@ import articlesIcon from '../assets/Images/articles.png';
 import creativeIcon from '../assets/Images/creativespace.png';
 import joinIcon from '../assets/Images/joinus.png';
 import contactIcon from '../assets/Images/contactus.png';
-import { useEffect } from 'react';
 
 export default function Creative() {
     const [idea, setIdea] = useState('');
@@ -23,64 +22,12 @@ export default function Creative() {
     const [gallery, setGallery] = useState([]);
     const [editingId, setEditingId] = useState(null);
     const [editText, setEditText] = useState('');
-
-    const handleEdit = async (id, newText) => {
-        try {
-            if (!newText.trim()) return alert("Idea cannot be empty");
-            const res = await fetch(`http://localhost:5000/api/creative/${id}`, {
-                method: "PUT",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ idea: newText })
-            });
-
-            if (!res.ok) {
-                const errorData = await res.json();
-                throw new Error(errorData.error || 'Failed to update idea');
-            }
-
-            const updatedItem = await res.json();
-            setGallery(prevGallery => prevGallery.map(item =>
-                item._id === id ? updatedItem : item
-            ));
-            setEditingId(null);
-            setEditText("");
-
-        } catch (error) {
-            console.error("Error updating idea:", error);
-            alert(error.message);
-        }
-    };
-
-    const handleDelete = async (id) => {
-        try {
-            console.log("Deleting item with id:", id);
-            const res = await fetch(`http://localhost:5000/api/creative/${id}`, {
-                method: "DELETE",
-                headers: {
-                    contentType: "application/json"
-                }
-            });
-
-            console.log("Delete response:", res.status);
-            if (!res.ok) {
-                const errorData = await res.json().catch(() => null);
-                console.error("Error details:", errorData);
-                throw new Error(errorData?.message || 'Failed to delete item');
-            }
-
-            await res.json();
-
-            setGallery(prevGallery => prevGallery.filter(item => item._id !== id));
-            alert('Item deleted successfully');
-        } catch (error) {
-            console.error("Error deleting item:", error);
-            alert("Failed to delete item");
-        }
-    };
+    const storedUser = JSON.parse(localStorage.getItem("user"));
+    const username = storedUser?.username || "Anonymous";
 
     const navigate = useNavigate();
 
-    //fetch existing gallery items
+    // Fetch gallery items
     useEffect(() => {
         fetch("http://localhost:5000/api/creative")
             .then(res => res.json())
@@ -88,19 +35,19 @@ export default function Creative() {
             .catch((error) => console.error(error));
     }, []);
 
-    //handle text idea submission
+    // Handle idea submission
     const handleSubmit = async () => {
         try {
             if (!idea.trim()) return alert("Please write something");
+
             const res = await fetch("http://localhost:5000/api/creative/idea", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ idea })
+                body: JSON.stringify({ idea, username })
             });
 
-            if (!res.ok) {
-                throw new Error('Failed to submit idea');
-            }
+            if (!res.ok) throw new Error('Failed to submit idea');
+
             const newIdea = await res.json();
             setGallery([newIdea, ...gallery]);
             setIdea('');
@@ -110,21 +57,21 @@ export default function Creative() {
         }
     };
 
-    //handle image upload
+    // Handle image upload
     const handleImageSubmit = async () => {
         try {
             if (!image) return alert("Please select an image");
+
             const formData = new FormData();
             formData.append("image", image);
+            formData.append("username", username);
 
             const res = await fetch("http://localhost:5000/api/creative/image", {
                 method: "POST",
                 body: formData
             });
 
-            if (!res.ok) {
-                throw new Error('Failed to upload image');
-            }
+            if (!res.ok) throw new Error('Failed to upload image');
 
             const newImage = await res.json();
             setGallery([newImage, ...gallery]);
@@ -134,8 +81,57 @@ export default function Creative() {
             alert("Failed to upload image");
         }
     };
-    const [currentSlide, setCurrentSlide] = useState(0);
 
+    // Handle edit
+    const handleEdit = async (id, newText) => {
+        try {
+            if (!newText.trim()) return alert("Idea cannot be empty");
+
+            const res = await fetch(`http://localhost:5000/api/creative/${id}`, {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ idea: newText, username })
+            });
+
+            if (!res.ok) {
+                const errorData = await res.json();
+                throw new Error(errorData.error || 'Failed to update idea');
+            }
+
+            const updatedItem = await res.json();
+            setGallery(prev => prev.map(item => item._id === id ? updatedItem : item));
+            setEditingId(null);
+            setEditText("");
+        } catch (error) {
+            console.error("Error updating idea:", error);
+            alert(error.message);
+        }
+    };
+
+    // Handle delete
+    const handleDelete = async (id) => {
+        try {
+            const res = await fetch(`http://localhost:5000/api/creative/${id}`, {
+                method: "DELETE",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ username })
+            });
+
+            if (!res.ok) {
+                const errorData = await res.json().catch(() => null);
+                throw new Error(errorData?.message || 'Failed to delete item');
+            }
+
+            await res.json();
+            setGallery(prev => prev.filter(item => item._id !== id));
+            alert('Item deleted successfully');
+        } catch (error) {
+            console.error("Error deleting item:", error);
+            alert("Failed to delete item");
+        }
+    };
+
+    // Menu Item component
     const MenuItem = ({ icon, text, path }) => {
         const currentPath = window.location.pathname;
         const isHome = path === '/';
@@ -180,6 +176,7 @@ export default function Creative() {
             overflowX: 'hidden',
             fontFamily: 'josefin sans, sans-serif'
         }}>
+            {/* Header */}
             <header className="header" style={{
                 display: 'flex',
                 justifyContent: 'space-between',
@@ -225,7 +222,7 @@ export default function Creative() {
                         </ul>
                     </nav>
 
-                    {/* Right Content */}
+                    {/* Hero Section */}
                     <div style={{ flex: 1 }}>
                         <section className="hero-section" style={{
                             display: 'flex',
@@ -239,19 +236,16 @@ export default function Creative() {
                             alignItems: 'center',
                             flexDirection: 'row-reverse'
                         }}>
-
                             <div className="hero-text">
-                                <h1 style={{ fontSize: '2.8rem', marginBottom: '20px' }}>Welcome to your<br />Creative playground</h1>
+                                <h1 style={{ fontSize: '2.8rem', marginBottom: '20px' }}>
+                                    Welcome to your<br />Creative playground
+                                </h1>
                             </div>
-
                             <img
                                 src={create}
                                 alt="Dragon Mascot"
-                                style={{
-                                    width: '450px',
-                                    height: 'auto',
-                                    marginRight: '40px'
-                                }} />
+                                style={{ width: '450px', height: 'auto', marginRight: '40px' }}
+                            />
                         </section>
                     </div>
                 </div>
@@ -294,8 +288,9 @@ export default function Creative() {
                                 fontFamily: 'inherit',
                                 resize: 'vertical',
                                 backgroundColor: '#36074A',
-                                alignSelf: 'center'
-                            }} />
+                                color: 'white'
+                            }}
+                        />
 
                         <div style={{
                             display: 'flex',
@@ -331,7 +326,6 @@ export default function Creative() {
                                     borderRadius: '8px',
                                     color: 'white',
                                     cursor: 'pointer',
-                                    transition: 'all 0.3s ease',
                                     minWidth: '150px'
                                 }}>
                                     Choose Image
@@ -354,7 +348,6 @@ export default function Creative() {
                                         borderRadius: '8px',
                                         cursor: 'pointer',
                                         fontSize: '16px',
-                                        transition: 'all 0.3s ease',
                                         minWidth: '150px'
                                     }}
                                 >
@@ -376,26 +369,13 @@ export default function Creative() {
                                 <button
                                     onClick={() => setImage(null)}
                                     style={{
-                                        backgroundColor: '#36074A',
-                                        marginLeft: '10px',
                                         background: 'none',
                                         border: 'none',
                                         color: '#36074A',
                                         cursor: 'pointer',
-                                        fontSize: '14px',
-                                        textDecoration: 'none',
-                                        borderRadius: '50%',
-                                        width: '35px',
-                                        height: '35px',
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        justifyContent: 'center',
-                                        transition: 'all 0.3s ease',
-                                        padding: '0',
-                                        lineHeight: '1'
+                                        fontSize: '20px'
                                     }}
-                                    onMouseOver={(e) => e.target.style.transform = 'scale(1.1)'}
-                                    onMouseOut={(e) => e.target.style.transform = 'scale(1)'}>
+                                >
                                     ×
                                 </button>
                             </p>
@@ -414,7 +394,7 @@ export default function Creative() {
                         marginBottom: '30px',
                         color: '#36074A',
                         textAlign: 'center'
-                    }}>YOUR GALLERY</h1>
+                    }}>GALLERY</h1>
 
                     <div className="gallery-grid" style={{
                         display: 'grid',
@@ -431,6 +411,7 @@ export default function Creative() {
                                 transition: 'transform 0.3s ease',
                                 position: 'relative'
                             }}>
+                                {/* Edit Mode */}
                                 {item.idea && editingId === item._id ? (
                                     <div style={{ marginBottom: '15px' }}>
                                         <textarea
@@ -500,47 +481,59 @@ export default function Creative() {
                                                 }}
                                             />
                                         )}
-                                        <div style={{
-                                            display: 'flex',
-                                            gap: '10px',
-                                            justifyContent: 'flex-end',
-                                            marginTop: '15px'
-                                        }}>
-                                            {item.idea && (
+
+                                        {item.username && (
+                                            <p style={{
+                                                fontSize: '14px',
+                                                color: '#666',
+                                                marginTop: '8px',
+                                                textAlign: 'left'
+                                            }}>
+                                                Submitted by: <b>{item.username}</b>
+                                            </p>
+                                        )}
+
+                                        {/* Show Edit/Delete only if logged-in user is owner */}
+                                        {item.username === username && (
+                                            <div style={{
+                                                display: 'flex',
+                                                gap: '10px',
+                                                justifyContent: 'flex-end',
+                                                marginTop: '15px'
+                                            }}>
+                                                {item.idea && (
+                                                    <button
+                                                        onClick={() => {
+                                                            setEditingId(item._id);
+                                                            setEditText(item.idea);
+                                                        }}
+                                                        style={{
+                                                            padding: '8px 16px',
+                                                            backgroundColor: '#36074A',
+                                                            color: 'white',
+                                                            border: 'none',
+                                                            borderRadius: '6px',
+                                                            cursor: 'pointer'
+                                                        }}
+                                                    >
+                                                        Edit
+                                                    </button>
+                                                )}
                                                 <button
-                                                    onClick={() => {
-                                                        setEditingId(item._id);
-                                                        setEditText(item.idea);
-                                                    }}
+                                                    onClick={() => handleDelete(item._id)}
                                                     style={{
                                                         padding: '8px 16px',
                                                         backgroundColor: '#36074A',
                                                         color: 'white',
                                                         border: 'none',
                                                         borderRadius: '6px',
-                                                        cursor: 'pointer',
-                                                        transition: 'all 0.3s ease'
+                                                        cursor: 'pointer'
                                                     }}
-                                                    onMouseOver={(e) => e.target.style.transform = 'scale(1.05)'}
-                                                    onMouseOut={(e) => e.target.style.transform = 'scale(1)'}
                                                 >
-                                                    Edit
+                                                    Delete
                                                 </button>
-                                            )}
-                                            <button
-                                                onClick={() => handleDelete(item._id)}
-                                                style={{
-                                                    padding: '8px 16px',
-                                                    backgroundColor: '#36074A',
-                                                    color: 'white',
-                                                    border: 'none',
-                                                    borderRadius: '6px',
-                                                    cursor: 'pointer',
-                                                    transition: 'all 0.3s ease'
-                                                }}
-                                                onMouseOver={(e) => e.target.style.transform = 'scale(1.05)'}
-                                                onMouseOut={(e) => e.target.style.transform = 'scale(1)'}>Delete</button>
-                                        </div>
+                                            </div>
+                                        )}
                                     </>
                                 )}
                             </div>

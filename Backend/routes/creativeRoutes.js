@@ -21,7 +21,12 @@ router.get("/", async (req, res) => {
 // Submit text idea
 router.post("/idea", async (req, res) => {
   try {
-    const newIdea = new Creative({ idea: req.body.idea });
+    const{idea, username} = req.body;
+
+    if(!username){
+      return res.status(400).json({ error: "Username is required" });
+    }
+    const newIdea = new Creative({ idea: req.body.idea, username });
     await newIdea.save();
     res.json(newIdea);
   } catch (err) {
@@ -32,8 +37,13 @@ router.post("/idea", async (req, res) => {
 // Submit image
 router.post("/image", upload.single("image"), async (req, res) => {
   try {
+    const {username} = req.body;
+    if(!username){
+      return res.status(400).json({ error: "Username is required" });
+    }
+
     const base64Image = req.file.buffer.toString("base64");
-    const newImage = new Creative({ image: base64Image });
+    const newImage = new Creative({ image: base64Image, username });
     await newImage.save();
     res.json(newImage);
   } catch (err) {
@@ -45,19 +55,24 @@ router.post("/image", upload.single("image"), async (req, res) => {
 router.delete("/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    
-    // Check if id is valid
+    const { username } = req.body; // who is trying to delete
+
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return res.status(400).json({ error: "Invalid ID format" });
     }
 
-    const deletedItem = await Creative.findByIdAndDelete(id);
-    
-    if (!deletedItem) {
+    const item = await Creative.findById(id);
+    if (!item) {
       return res.status(404).json({ error: "Item not found" });
     }
 
-    res.json({ message: "Item deleted successfully", deletedItem });
+    // Ownership check
+    if (item.username !== username) {
+      return res.status(403).json({ error: "You can only delete your own items" });
+    }
+
+    await item.deleteOne();
+    res.json({ message: "Item deleted successfully", deletedItem: item });
   } catch (err) {
     console.error("Delete error:", err);
     res.status(500).json({ error: "Failed to delete item" });
@@ -68,27 +83,28 @@ router.delete("/:id", async (req, res) => {
 router.put("/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    const { idea } = req.body;
-    
-    // Check if id is valid
+    const { idea, username } = req.body; // who is trying to update
+
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return res.status(400).json({ error: "Invalid ID format" });
     }
 
-    // Check if idea text is provided
     if (!idea || !idea.trim()) {
       return res.status(400).json({ error: "Idea text is required" });
     }
 
-    const updatedItem = await Creative.findByIdAndUpdate(
-      id,
-      { idea: idea.trim() },
-      { new: true } // Returns the updated document
-    );
-    
-    if (!updatedItem) {
+    const item = await Creative.findById(id);
+    if (!item) {
       return res.status(404).json({ error: "Item not found" });
     }
+
+    // Ownership check
+    if (item.username !== username) {
+      return res.status(403).json({ error: "You can only edit your own items" });
+    }
+
+    item.idea = idea.trim();
+    const updatedItem = await item.save();
 
     res.json(updatedItem);
   } catch (err) {
