@@ -1,4 +1,4 @@
-import { useState,useEffect } from 'react';
+import { useState} from 'react';
 import { Link, useNavigate} from 'react-router-dom';
 import Footer from './Footer.jsx';
 import './Home.css';
@@ -23,9 +23,10 @@ import img5 from '../assets/Images/Halima.png';
 
 export default function Articles() {
 
-  const [currentSlide, setCurrentSlide] = useState(0);
+  const [currentSlide, setCurrentSlide] = useState(0); //track current slider image
   const navigate = useNavigate();
 
+  //menuitem for sidebar navigation
   const MenuItem = ({ icon, text, path }) => {
     const currentPath = window.location.pathname;
     const isHome = path === '/';
@@ -150,7 +151,7 @@ export default function Articles() {
           </div>
         </div>
         
-        {/* Clickable Image Slider */}
+        {/* Article block */}
         <div style={{
             display: 'flex',
             justifyContent: 'center',
@@ -192,22 +193,3 @@ export default function Articles() {
   );
 }
 
-// MenuItem component
-const MenuItem = ({ icon, text, path }) => (
-  <li style={{ marginBottom: '15px' }}>
-    <Link to={path} style={{
-      display: 'flex',
-      alignItems: 'center',
-      gap: '10px',
-      color: '#36074A',
-      textDecoration: 'none',
-      fontSize: '16px',
-      padding: '10px',
-      borderRadius: '5px',
-      transition: 'background-color 0.3s ease'
-    }}>
-      {icon}
-      {text}
-    </Link>
-  </li>
-);

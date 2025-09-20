@@ -115,12 +115,6 @@ const Profile = () => {
             fontSize: '44px'}}>
             Welcome, <span style={{ color: '#FFD700' }}>{storedUser.username || 'Guest'}</span>
           </h2>
-          <div style={{
-            width: '130px',
-            height: '130px',
-            borderRadius: '50%',
-            background: 'linear-gradient(180deg, #FFB6C1 0%, #87CEEB 100%)',
-          }}></div>
         </div>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: '15px', fontSize:'26px'}}>

@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import {useState} from 'react';
 import './login.css';
 import Logo from '../Assets/Images/Logo.png';
 import logdrag from '../assets/Images/logindragon.png';
@@ -6,11 +6,11 @@ import back from '../assets/Images/Back.png';
 import { Link,useNavigate} from 'react-router-dom';
 
 function Login() {
-      const navigate = useNavigate();
-  const [formData, setFormData] = useState({
-    username: '',
-    email: '',
-    password: ''
+    const navigate = useNavigate();
+    const [formData, setFormData] = useState({
+        username: '',
+        email: '',
+        password: ''
   });
 
 const handleSubmit = async (e) => {

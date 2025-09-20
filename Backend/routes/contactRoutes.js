@@ -10,7 +10,7 @@ router.post('/', async (req, res) => {
   }
 
   try {
-    const newContact = new Contact({ email, message });
+    const newContact = new Contact({ email, message }); // Create a new contact instance
     await newContact.save();
     res.status(201).json({ message: "Message saved successfully" });
   } catch (err) {

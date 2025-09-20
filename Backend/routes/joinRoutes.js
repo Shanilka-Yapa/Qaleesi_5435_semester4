@@ -4,7 +4,7 @@ const Join = require("../models/joinModel");
 
 const router = express.Router();
 
-// POST: Add a join request
+// Add a join request
 router.post("/", async (req, res) => {
   try {
     const { firstname, lastname, email, phoneno, reason } = req.body;
@@ -24,7 +24,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-// GET: Fetch all join requests
+// Retrieve all join requests
 router.get("/", async (req, res) => {
   try {
     const joins = await Join.find();

@@ -24,8 +24,6 @@ import hands from '../assets/Images/volunteer1.png';
 
 export default function Join() {
 
-    const [currentSlide, setCurrentSlide] = useState(0);
-
     const navigate = useNavigate();
     const [successMessage, setSuccessMessage] = useState('');
 
@@ -316,22 +314,3 @@ export default function Join() {
   );
 }
 
-// MenuItem component
-const MenuItem = ({ icon, text, path }) => (
-  <li style={{ marginBottom: '15px' }}>
-    <Link to={path} style={{
-      display: 'flex',
-      alignItems: 'center',
-      gap: '10px',
-      color: '#36074A',
-      textDecoration: 'none',
-      fontSize: '16px',
-      padding: '10px',
-      borderRadius: '5px',
-      transition: 'background-color 0.3s ease'
-    }}>
-      {icon}
-      {text}
-    </Link>
-  </li>
-);

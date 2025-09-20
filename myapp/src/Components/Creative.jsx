@@ -17,17 +17,20 @@ import joinIcon from '../assets/Images/joinus.png';
 import contactIcon from '../assets/Images/contactus.png';
 
 export default function Creative() {
-    const [idea, setIdea] = useState('');
-    const [image, setImage] = useState(null);
-    const [gallery, setGallery] = useState([]);
-    const [editingId, setEditingId] = useState(null);
-    const [editText, setEditText] = useState('');
+    // Form & gallery states
+    const [idea, setIdea] = useState(''); //stores the text of a new idea
+    const [image, setImage] = useState(null); //stores an uploaded image file
+    const [gallery, setGallery] = useState([]); //stores all gallery items. starts empty
+    const [editingId, setEditingId] = useState(null); //track which idea is being edited
+    const [editText, setEditText] = useState(''); //stores text for editing an idea
+
+    // Get logged-in username from local storage
     const storedUser = JSON.parse(localStorage.getItem("user"));
     const username = storedUser?.username || "Anonymous";
 
     const navigate = useNavigate();
 
-    // Fetch gallery items
+    // Fetch gallery items from backend on component mount
     useEffect(() => {
         fetch("http://localhost:5000/api/creative")
             .then(res => res.json())
@@ -99,7 +102,7 @@ export default function Creative() {
             }
 
             const updatedItem = await res.json();
-            setGallery(prev => prev.map(item => item._id === id ? updatedItem : item));
+            setGallery(prev => prev.map(item => item._id === id ? updatedItem : item));//replaces the updated item in gallery
             setEditingId(null);
             setEditText("");
         } catch (error) {
@@ -123,7 +126,7 @@ export default function Creative() {
             }
 
             await res.json();
-            setGallery(prev => prev.filter(item => item._id !== id));
+            setGallery(prev => prev.filter(item => item._id !== id));//removes the deleted item from gallery
             alert('Item deleted successfully');
         } catch (error) {
             console.error("Error deleting item:", error);
@@ -276,7 +279,7 @@ export default function Creative() {
                         <textarea
                             className="idea-textarea"
                             value={idea}
-                            onChange={(e) => setIdea(e.target.value)}
+                            onChange={(e) => setIdea(e.target.value)}//stores the text of a new idea
                             placeholder="Write your brilliant idea here..."
                             style={{
                                 width: '100%',
@@ -300,7 +303,7 @@ export default function Creative() {
                         }}>
                             <button
                                 className="submit-button"
-                                onClick={handleSubmit}
+                                onClick={handleSubmit} //submits the new idea
                                 style={{
                                     padding: '12px 30px',
                                     backgroundColor: '#36074A',
@@ -331,7 +334,7 @@ export default function Creative() {
                                     Choose Image
                                     <input
                                         type="file"
-                                        onChange={(e) => setImage(e.target.files[0])}
+                                        onChange={(e) => setImage(e.target.files[0])} //stores an uploaded image file
                                         style={{ display: 'none' }}
                                         accept="image/*"
                                     />
@@ -339,7 +342,7 @@ export default function Creative() {
                             ) : (
                                 <button
                                     className="submit-button"
-                                    onClick={handleImageSubmit}
+                                    onClick={handleImageSubmit} //submits the uploaded image
                                     style={{
                                         padding: '12px 30px',
                                         backgroundColor: '#36074A',
@@ -367,7 +370,7 @@ export default function Creative() {
                             }}>
                                 Selected: {image.name}
                                 <button
-                                    onClick={() => setImage(null)}
+                                    onClick={() => setImage(null)} //clear selected image
                                     style={{
                                         background: 'none',
                                         border: 'none',
@@ -416,7 +419,7 @@ export default function Creative() {
                                     <div style={{ marginBottom: '15px' }}>
                                         <textarea
                                             value={editText}
-                                            onChange={(e) => setEditText(e.target.value)}
+                                            onChange={(e) => setEditText(e.target.value)} //stores text for editing an idea
                                             style={{
                                                 width: '100%',
                                                 minHeight: '100px',
@@ -429,7 +432,7 @@ export default function Creative() {
                                         />
                                         <div style={{ display: 'flex', gap: '10px', justifyContent: 'flex-end' }}>
                                             <button
-                                                onClick={() => handleEdit(item._id, editText)}
+                                                onClick={() => handleEdit(item._id, editText)} //saves the edited idea
                                                 style={{
                                                     padding: '8px 16px',
                                                     backgroundColor: '#36074A',
@@ -442,7 +445,7 @@ export default function Creative() {
                                                 Save
                                             </button>
                                             <button
-                                                onClick={() => setEditingId(null)}
+                                                onClick={() => setEditingId(null)} //cancels editing
                                                 style={{
                                                     padding: '8px 16px',
                                                     backgroundColor: '#666',

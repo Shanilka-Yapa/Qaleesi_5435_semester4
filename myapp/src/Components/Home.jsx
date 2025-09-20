@@ -72,11 +72,11 @@ export default function Home() {
   const navigate = useNavigate();
 
   const nextSlide = () => {
-    setCurrentSlide((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
+    setCurrentSlide((prev) => (prev === slides.length - 1 ? 0 : prev + 1));//forward cycles through the slides array
   };
 
   const prevSlide = () => {
-    setCurrentSlide((prev) => (prev === 0 ? slides.length - 1 : prev - 1));
+    setCurrentSlide((prev) => (prev === 0 ? slides.length - 1 : prev - 1));//backward cycles through the slides array
   };
 
   const MenuItem = ({ icon, text, path }) => {

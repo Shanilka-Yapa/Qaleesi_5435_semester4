@@ -19,6 +19,8 @@ import contactIcon from '../assets/Images/contactus.png';
 export default function Contact() {
     const [email, setEmail] = useState('');
     const [name, setName] = useState('');
+
+    //handle form submit
     const handleSubmit = async (e) => {
       e.preventDefault();
       try {
@@ -27,11 +29,11 @@ export default function Contact() {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ email, message: name }), // 'name' here is your message
+          body: JSON.stringify({ email, message: name }), // name is the  message
 });
 
       if (response.ok) {
-        alert(`Thanks ${name}! You will receive a reply email as soon as possible.`);
+        alert(`Thanks! for contacting us. You will receive a reply email as soon as possible.`);
         setEmail('');
         setName('');
       } else {
@@ -43,7 +45,6 @@ export default function Contact() {
       }
     };
 
-    const [currentSlide, setCurrentSlide] = useState(0);
     const navigate = useNavigate();
     const MenuItem = ({ icon, text, path }) => {
         const currentPath = window.location.pathname;
@@ -160,7 +161,7 @@ export default function Contact() {
                             style={{
                                 fontFamily: 'Josefin Sans, sans-serif',  
                             }}
-                            type="email"
+                            type="email"  //input expects an email
                             placeholder="Enter a valid email address"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
@@ -256,23 +257,3 @@ export default function Contact() {
     </div>
   );
 }
-
-// MenuItem component
-const MenuItem = ({ icon, text, path }) => (
-  <li style={{ marginBottom: '15px' }}>
-    <Link to={path} style={{
-      display: 'flex',
-      alignItems: 'center',
-      gap: '10px',
-      color: '#36074A',
-      textDecoration: 'none',
-      fontSize: '16px',
-      padding: '10px',
-      borderRadius: '5px',
-      transition: 'background-color 0.3s ease'
-    }}>
-      {icon}
-      {text}
-    </Link>
-  </li>
-);

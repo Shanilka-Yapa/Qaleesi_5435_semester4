@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Link, useNavigate} from 'react-router-dom';
 import Footer from './Footer.jsx';
 import './Home.css';
@@ -22,12 +21,11 @@ import impact from '../assets/Images/impact.png';
 
 
 export default function About() {
-  const [currentSlide, setCurrentSlide] = useState(0);
   const navigate = useNavigate();
   const MenuItem = ({ icon, text, path }) => {
     const currentPath = window.location.pathname;
     const isHome = path === '/';
-    const isActive = currentPath === path;
+    const isActive = currentPath === path;  //highlight active menu item
 
     return (
       <li style={{ marginBottom: '15px' }}>
@@ -73,6 +71,7 @@ export default function About() {
         backgroundColor: '#fff',
         position: 'relative'}}>
         <img src={Logo} alt="Qaleesi Logo" className="logo" />
+
         <img 
            src={arrow} 
             alt="arrow back" 
@@ -86,10 +85,12 @@ export default function About() {
             onClick={() => navigate('/home')}
             onMouseOver={(e) => e.target.style.transform = 'scale(1.1)'}
             onMouseOut={(e) => e.target.style.transform = 'scale(1)'}/>
+
       </header>
 
       <main style={{ padding: '20px' }}>
         <div style={{ display: 'flex', gap: '40px', marginBottom: '40px' }}>
+          
           {/* Left Menu */}
           <nav style={{
             width: '250px',
@@ -252,22 +253,3 @@ export default function About() {
   );
 }
 
-// MenuItem component
-const MenuItem = ({ icon, text, path }) => (
-  <li style={{ marginBottom: '15px' }}>
-    <Link to={path} style={{
-      display: 'flex',
-      alignItems: 'center',
-      gap: '10px',
-      color: '#36074A',
-      textDecoration: 'none',
-      fontSize: '16px',
-      padding: '10px',
-      borderRadius: '5px',
-      transition: 'background-color 0.3s ease'
-    }}>
-      {icon}
-      {text}
-    </Link>
-  </li>
-);
