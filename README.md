@@ -50,7 +50,7 @@ Users can explore community information, manage their profiles, get in touch wit
 The following diagram illustrates the overall architecture of Qaleesi, including the React frontend, Express backend, API communication, and MongoDB data layer.
 
 <p align="center">
-  <img src="qaleesi-architecture.png" alt="Qaleesi System Architecture" width="850">
+  <img src="qalessi-architecture.png" alt="Qaleesi System Architecture" width="850">
 </p>
 
 ---
